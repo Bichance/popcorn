@@ -21,7 +21,8 @@ import spring.model.qna.QnaInter;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
+@ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class QnaInterTest {
 	
 	private static final Logger logger = LoggerFactory.getLogger(QnaInterTest.class);
@@ -48,7 +49,7 @@ public class QnaInterTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testRead() {
 //		ReplyDTO dto = inter.read(3);
 //		logger.info("dto: "+dto);
@@ -93,6 +94,7 @@ public class QnaInterTest {
 	}
 
 	@Test
+	@Ignore
 	public void testRcount() {
 		int bbsno = 2; //글 번호
 //		int cnt = inter.rcount(bbsno);

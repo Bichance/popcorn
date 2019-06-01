@@ -16,25 +16,25 @@ public class QnaServiceImpl implements QnaService {
 	//private ReplyInter rinter;
 	
 	@Autowired
-	private QnaInter binter;
+	private QnaInter qinter;
 	
-	public void delete(int bbsno) throws Exception {
+	public void delete(int qna_num) throws Exception {
 		
 		//자식 레코드 삭제(댓글 삭제)
 		//부모 레코드 삭제(글 삭제)
 		//rinter.bdelete(bbsno);
-		binter.delete(bbsno);
+		qinter.delete(qna_num);
 		
 	}
 	
 	public void reply(QnaDTO dto) throws Exception {
 		
 		Map map = new HashMap();
-		map.put("grpno", dto.getGrpno());
-		map.put("ansnum", dto.getAnsnum());
+		map.put("qna_grpno", dto.getQna_grpno());
+		map.put("qna_ansnum", dto.getQna_ansnum());
 		
-		binter.upAnsnum(map);
-		binter.createReply(dto);
+		qinter.upAnsnum(map);
+		qinter.createReply(dto);
 	
 	}
 }
