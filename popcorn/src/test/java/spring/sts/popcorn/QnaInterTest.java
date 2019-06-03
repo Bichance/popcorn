@@ -29,37 +29,37 @@ public class QnaInterTest {
 	private static final Logger logger = LoggerFactory.getLogger(QnaInterTest.class);
 	
 	@Autowired
-	private QnaMapper inter;
+	private QnaMapper qMapper;
 	
 
 	@Test
 	//@Ignore
 	public void testMapper() {
-	logger.info("mapper:"+inter.getClass().getName());	 
+	logger.info("mapper:"+qMapper.getClass().getName());	 
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void testCreate() {
 		QnaDTO dto = new QnaDTO();
 		
 		//dto.setQna_num(6);
 		dto.setQna_title("테스트");
-		//dto.setQna_date("sysdate");
 		dto.setQna_content("내용");
+		//dto.setQna_date("sysdate");
 		dto.setQna_type("테슷");
 		dto.setQna_pw("1234");
 		//dto.setQna_grpno(6);
 		dto.setId("user1");
 		
-		assertTrue(inter.create(dto)>0);
+		assertTrue(qMapper.create(dto)>0);
 	}
 
 	//완료
 	@Test
 	@Ignore
 	public void testRead() {
-		QnaDTO dto = inter.read(1);
+		QnaDTO dto = qMapper.read(1);
 		logger.info("dto: "+dto);
 	}
 
@@ -73,7 +73,7 @@ public class QnaInterTest {
 		dto.setQna_content("e댓글 2로 변경");
 		dto.setQna_type("변경");
 		
-		assertTrue(inter.update(dto)>0);
+		assertTrue(qMapper.update(dto)>0);
 	}
 
 	//완료
@@ -81,7 +81,7 @@ public class QnaInterTest {
 	@Ignore
 	public void testDelete() {
 		int Qna_num = 1;
-		assertTrue(inter.delete(Qna_num)>0);
+		assertTrue(qMapper.delete(Qna_num)>0);
 	}
 
 	//완료
@@ -95,7 +95,7 @@ public class QnaInterTest {
 		map.put("sno", 1);
 		map.put("eno", 5);
 		
-		List<QnaDTO> list = inter.list(map);
+		List<QnaDTO> list = qMapper.list(map);
 		logger.info("list: "+list);
 	}
 
@@ -108,7 +108,7 @@ public class QnaInterTest {
 		
 		map.put("Qna_num", 3);
 		//글 번호
-		int cnt = inter.total(map);
+		int cnt = qMapper.total(map);
 		logger.info("total: "+cnt);
 	}
 
