@@ -2,122 +2,130 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="spring.model.qna.QnaInter">
 
-<select id="list" parameterType="Map" resultType="QnaDTO">                                                                                        
- SELECT qna_num, id, qna_title, qna_type,                                                         
-        qna_date, qna_grpno, qna_indent, qna_ansnum, r                                                         
-    from(                                                                                        
-        SELECT qna_num, id, qna_title, qna_type,                                              
-        qna_date, qna_grpno, qna_indent, qna_ansnum, rownum r                                                  
-        from(                                                                                   
-			select qna_num, id, qna_title, qna_type, to_char(qna_date, 'yyyy-mm-dd') qna_date, qna_grpno, qna_indent, qna_ansnum 
-			from qna
-			<where>
+	<select id="list" parameterType="Map" resultType="QnaDTO">
+		SELECT qna_num, id, qna_title, qna_type,
+		qna_date, qna_grpno, qna_indent, qna_ansnum, r
+		from(
+		SELECT qna_num, id, qna_title, qna_type,
+		qna_date, qna_grpno, qna_indent, qna_ansnum, rownum r
+		from(
+		select qna_num, id, qna_title, qna_type, to_char(qna_date, 'yyyy-mm-dd')
+		qna_date, qna_grpno, qna_indent, qna_ansnum
+		from qna
+		<where>
 			<choose>
-			<when test="col=='id'">
-				id like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_title'">
-				qna_title like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_content'">
-				qna_content like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_title_qna_content'">
-				qna_content like '%'||#{word}||'%'
-				or qna_title like '%'||#{word}||'%'
-			</when>
+				<when test="col=='id'">
+					id like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_title'">
+					qna_title like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_content'">
+					qna_content like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_title_qna_content'">
+					qna_content like '%'||#{word}||'%'
+					or qna_title like '%'||#{word}||'%'
+				</when>
 			</choose>
-			</where>
-			order by qna_grpno desc, qna_ansnum 
-			)
+		</where>
+		order by qna_grpno desc, qna_ansnum
+		)
 		)
 		<![CDATA[
 		where r>=#{sno} and r<=#{eno} 
-		]]>                                                                                          
-</select>
-<select id="total" parameterType="Map" resultType="int">
-	select count(*) 
-	from qna
-	<where>
+		]]>
+	</select>
+	<select id="total" parameterType="Map" resultType="int">
+		select count(*)
+		from qna
+		<where>
 			<choose>
-			<when test="col=='id'">
-				id like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_title'">
-				qna_title like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_content'">
-				qna_content like '%'||#{word}||'%'
-			</when>
-			<when test="col=='qna_title_qna_content'">
-				qna_content like '%'||#{word}||'%'
-				or qna_title like '%'||#{word}||'%'
-			</when>
+				<when test="col=='id'">
+					id like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_title'">
+					qna_title like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_content'">
+					qna_content like '%'||#{word}||'%'
+				</when>
+				<when test="col=='qna_title_qna_content'">
+					qna_content like '%'||#{word}||'%'
+					or qna_title like '%'||#{word}||'%'
+				</when>
 			</choose>
-	</where>     
-</select>
-<select id="read" parameterType="int" resultType="QnaDTO">
-	select qna_num, qna_title, qna_content, to_char(qna_date,'yyyy-mm-dd') qna_date, qna_type 
-	from qna                                                                       
-	where qna_num = #{qna_num}                                                                   
-</select>
-<insert id="create" parameterType="QnaDTO">
-	insert into qna(qna_num, qna_title, qna_content, qna_date, qna_type, qna_pw, qna_grpno, id)
-	values((select nvl(Max(qna_num),0)+1 as qna_num                    
-	from qna),                                                       
-	#{qna_title},#{qna_content}, sysdate, #{qna_type}, (select nvl(Max(qna_grpno),0)+1 as qna_grpno from qna), #{id})           
-</insert>
-<update id="update" parameterType="QnaDTO">
-	update qna                           
-	set qna_title=#{qna_title}, qna_content=#{qna_content}, qna_type=#{qna_type}    
-	where qna_num= #{qna_num}                      
-</update>
+		</where>
+	</select>
+	<select id="read" parameterType="int" resultType="QnaDTO">
+		select qna_num, qna_title, qna_content, to_char(qna_date,'yyyy-mm-dd')
+		qna_date, qna_type
+		from qna
+		where qna_num = #{qna_num}
+	</select>
+	<insert id="create" parameterType="QnaDTO">
+		insert into qna(qna_num, qna_title, qna_content, qna_date, qna_type, qna_pw,
+		qna_grpno, id)
+		values((select nvl(Max(qna_num),0)+1 as qna_num
+		from qna),
+		#{qna_title},#{qna_content}, sysdate, #{qna_type}, (select nvl(Max(qna_grpno),0)+1 as qna_grpno
+		from qna), #{id})
+	</insert>
+	<update id="update" parameterType="QnaDTO">
+		update qna
+		set qna_title=#{qna_title}, qna_content=#{qna_content},
+		qna_type=#{qna_type}
+		where qna_num= #{qna_num}
+	</update>
 
-<delete id="delete" parameterType="int">
-	delete from qna
-	where qna_num1 = #{qna_num}                 
-</delete>
+	<delete id="delete" parameterType="int">
+		delete from qna
+		where qna_num = #{qna_num}
+	</delete>
 
-<select id="readReply" parameterType="int" resultType="QnaDTO">
-	select qna_num, qna_grpno, qna_title, qna_indent, qna_ansnum
-	from qna                              
-	where qna_num = #{qna_num}                        
-</select>
-<update id="upAnsnum" parameterType="Map">
-	update qna       
-	set qna_ansnum = qna_ansnum +1	
-	where qna_grpno = #{qna_grpno}
-	and qna_ansnum > #{qna_ansnum} 
-</update>
-<insert id="createReply" parameterType="QnaDTO">
-	insert into qna(qna_num, id, qna_title, qna_content, qna_pw,
-	qna_date, qna_grpno, qna_indent, qna_ansnum, qna_refnum)            
-	values((select nvl(Max(qna_num),0)+1 as qna_num     
-	from qna),                                       
-	#{id}, #{qna_title}, #{qna_content}, #{qna_pw}, sysdate, #{qna_grpno}, #{qna_indent}+1, #{qna_ansnum}+1, #{qna_num} )                  
-</insert>
+	<select id="readReply" parameterType="int" resultType="QnaDTO">
+		select qna_num, qna_grpno, qna_title, qna_indent, qna_ansnum
+		from qna
+		where qna_num = #{qna_num}
+	</select>
+	
+	<update id="upAnsnum" parameterType="Map">
+		update qna
+		set qna_ansnum = qna_ansnum +1
+		where qna_grpno = #{qna_grpno}
+		and qna_ansnum > #{qna_ansnum}
+	</update>
+	
+	<insert id="createReply" parameterType="QnaDTO">
+		insert into qna(qna_num, id, qna_title, qna_content, qna_pw,
+		qna_date, qna_grpno, qna_indent, qna_ansnum, qna_refnum)
+		values((select nvl(Max(qna_num),0)+1 as qna_num
+		from qna),
+		#{id}, #{qna_title}, #{qna_content}, #{qna_pw}, sysdate, #{qna_grpno},
+		#{qna_indent}+1, #{qna_ansnum}+1, #{qna_num} )
+	</insert>
 
-<!-- <select id="passCheck" parameterType="Map" resultType="int"> -->
-<!-- 	select count(bbsno) as cnt -->
-<!-- 	from bbs                 -->
-<!-- 	where bbsno=#{bbsno}  and passwd= #{passwd} -->
-<!-- </select> -->
+	<!-- <select id="passCheck" parameterType="Map" resultType="int"> -->
+	<!-- select count(bbsno) as cnt -->
+	<!-- from bbs -->
+	<!-- where bbsno=#{bbsno} and passwd= #{passwd} -->
+	<!-- </select> -->
 
 
-<!--  이거 어디디 쓰는건지 아시는분.....ㅋㅋㅋ -->
+	<!-- 이거 어디디 쓰는건지 아시는분.....ㅋㅋㅋ -->
 
-<!-- <select id="refnumCheck" parameterType="int" resultType="int"> -->
-<!-- select count(*) from bbs  -->
-<!-- where refnum = #{bbsno}      -->
-<!-- </select> -->
+	<!-- <select id="refnumCheck" parameterType="int" resultType="int"> -->
+	<!-- select count(*) from bbs -->
+	<!-- where refnum = #{bbsno} -->
+	<!-- </select> -->
 
-<!-- VIEWCNT 는 팀원들과 상의 후 추가 예정 -->
-<!-- <update id="upViewcnt" parameterType="int"> -->
-<!-- 	update bbs set                  -->
-<!-- 	viewcnt = viewcnt + 1          -->
-<!-- 	where bbsno = #{bbsno}               -->
-<!-- </update> -->
+	<!-- VIEWCNT 는 팀원들과 상의 후 추가 예정 -->
+	<!-- <update id="upViewcnt" parameterType="int"> -->
+	<!-- update bbs set -->
+	<!-- viewcnt = viewcnt + 1 -->
+	<!-- where bbsno = #{bbsno} -->
+	<!-- </update> -->
 </mapper>

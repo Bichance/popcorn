@@ -51,7 +51,7 @@
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 		p:driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
 		p:url="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"
-		p:username="soldesk" p:password="1234" />
+		p:username="popcornL" p:password="popcorn" />
 
 
 	<!-- MyBatis SQL 실행 클래스 -->
