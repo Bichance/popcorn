@@ -1,9 +1,11 @@
-package spring.model.qna;
+package spring.mapper.popcorn;
 
 import java.util.List;
 import java.util.Map;
 
-public interface QnaInter {
+import spring.model.qna.QnaDTO;
+
+public interface QnaMapper {
 	
 	int create(QnaDTO dto);
 	QnaDTO read(int bbsno);

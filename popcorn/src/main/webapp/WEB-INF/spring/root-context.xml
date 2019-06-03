@@ -70,7 +70,7 @@
 			ref="sqlSessionFactory" />
 	</bean>
 
-	<mybatis-spring:scan base-package="spring.model" />
+	<mybatis-spring:scan base-package="spring.mapper.popcorn" />
 
 
 

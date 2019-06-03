@@ -17,8 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import spring.mapper.popcorn.QnaMapper;
 import spring.model.qna.QnaDTO;
-import spring.model.qna.QnaInter;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +29,7 @@ public class QnaInterTest {
 	private static final Logger logger = LoggerFactory.getLogger(QnaInterTest.class);
 	
 	@Autowired
-	private QnaInter inter;
+	private QnaMapper inter;
 	
 
 	@Test
