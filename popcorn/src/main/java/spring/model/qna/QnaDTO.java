@@ -7,10 +7,14 @@ public class QnaDTO {
 	private String qna_date; // DATE NULL,
 	private String qna_type; // VARCHAR(30) NULL,
 	private String qna_pw; // VARCHAR(30) NULL,
+	private int qna_viewcnt; // NUMBER NULL,
 	private int qna_grpno; // NUMBER NULL,
 	private int qna_indent; // NUMBER NULL,
 	private int qna_ansnum; // NUMBER NULL,
 	private int qna_refnum; // NUMBER NULL,
+	private String id; // VARCHAR(30) NOT NULL,
+	// PRIMARY KEY (qna_num), FOREIGN KEY (id)
+
 	
 	
 	public int getQna_refnum() {
@@ -20,9 +24,6 @@ public class QnaDTO {
 	public void setQna_refnum(int qna_refnum) {
 		this.qna_refnum = qna_refnum;
 	}
-
-	private String id; // VARCHAR(30) NOT NULL,
-						// PRIMARY KEY (qna_num), FOREIGN KEY (id)
 
 	public QnaDTO() {
    		super();
@@ -128,6 +129,14 @@ public class QnaDTO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public int getQna_viewcnt() {
+		return qna_viewcnt;
+	}
+
+	public void setQna_viewcnt(int qna_viewcnt) {
+		this.qna_viewcnt = qna_viewcnt;
 	}
 
 }

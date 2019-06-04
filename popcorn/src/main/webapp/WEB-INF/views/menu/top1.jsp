@@ -34,6 +34,7 @@ font-family: 'Patua One', cursive;
      <li class="active"><a href="#"></a></li>
 <%--       <li><a href="<%=root %>/">Home</a></li> --%>
       <li><a href="<%=root %>/movie/create" style="padding-top: 25px">MOVIE</a></li>
+      <li><a href="<%=root %>/qna/list" style="padding-top: 25px">Q & A</a></li>
       <li><a href="#"  style="padding-top: 25px">Page 2</a></li>
       <li><a href="#"  style="padding-top: 25px">Page 3</a></li>
     </ul>

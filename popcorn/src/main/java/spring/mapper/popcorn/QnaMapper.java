@@ -16,10 +16,8 @@ public interface QnaMapper {
 	QnaDTO readReply(int qna_num);
 	void upAnsnum(Map map);
 	int createReply(QnaDTO dto);
-	//int passCheck(Map map);
-	//int refnumCheck(int bbsno);
-	//void upViewcnt(int bbsno);
-	
-	
+	int passCheck(Map map);
+	int refnumCheck(int qna_num);
+	void upViewcnt(int qna_num);
 
 }

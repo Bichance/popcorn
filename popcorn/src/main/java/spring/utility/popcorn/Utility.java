@@ -12,15 +12,17 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import spring.mapper.popcorn.QreplyMapper;
+
 //import spring.model.ireply.IreplyInter;
 //import spring.model.reply.ReplyInter;
 
 public class Utility {
 	 
-//	public static int rcount(int bbsno, ReplyInter inter){
-//         //오브
-//		return rinter.rcount(bbsno);
-//    }
+	public static int rcount(int qna_num, QreplyMapper qrMapper){
+         //오브
+		return qrMapper.rcount(qna_num);
+    }
 
 	
 	 public static String rpaging(int total, int nowPage, int recordPerPage, String col, String word, String url,
