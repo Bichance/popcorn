@@ -30,7 +30,7 @@ public class QnaController {
 	@Autowired
 	private QnaMapper qMapper;
 	@Autowired
-    private QreplyMapper qReplyMapper;
+    private QreplyMapper qrMapper;
 	
 	@PostMapping("/qna/reply")
 	public String reply(QnaDTO dto, RedirectAttributes redi, Model model) {
@@ -112,7 +112,7 @@ public class QnaController {
 		
 	}
 	
-	@GetMapping("/bbs/read")
+	@GetMapping("/qna/read")
 	public String read(int qna_num, Model model, int nowPage, String col, String word, HttpServletRequest request) {
 	
 		QnaDTO dto = qMapper.read(qna_num);
@@ -157,7 +157,6 @@ public class QnaController {
 			return "error/error";
 		}
 	}
-	
 	
 	@GetMapping("/qna/create")
 	public String create() {
@@ -206,7 +205,7 @@ public class QnaController {
 				request.setAttribute("col", col);
 				request.setAttribute("word", word);
 				request.setAttribute("nowPage", nowPage);
-				//request.setAttribute("rinter", rinter); 
+				request.setAttribute("qrMapper", qrMapper); 
 		
 				return "/qna/list";
 	}

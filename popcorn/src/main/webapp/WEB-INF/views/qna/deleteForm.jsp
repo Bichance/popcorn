@@ -26,15 +26,15 @@
 			<c:otherwise>
 				<h1 class="col-sm-offset-2 col-sm-10">삭제</h1>
 				<form class="form-horizontal" action="delete" method="post">
-					<input type="hidden" name="bbsno" value="${ param.bbsno}">
+					<input type="hidden" name="qna_num" value="${ param.qna_num}">
 					<input type="hidden" name="col" value="${ param.col}"> <input
 						type="hidden" name="word" value="${ param.word}"> <input
 						type="hidden" name="nowPage" value="${ param.nowPage}">
 
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="passwd">비밀번호</label>
+						<label class="control-label col-sm-2" for="qna_pw">비밀번호</label>
 						<div class="col-sm-6">
-							<input type="password" name="passwd" id="passwd"
+							<input type="password" name="qna_pw" id="qna_pw"
 								class="form-control">
 						</div>
 					</div>

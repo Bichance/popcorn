@@ -39,7 +39,7 @@
 
 	</bean>
 
-	<!-- 원격 연걸 -->
+	<!--원격 연결 --> 
 <!-- 	<bean id="dataSource" -->
 <!-- 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" -->
 <!-- 		p:driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" -->
@@ -51,7 +51,7 @@
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
 		p:driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
 		p:url="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"
-		p:username="popcornL" p:password="popcorn" />
+		p:username="LDJ" p:password="1234" />
 
 
 	<!-- MyBatis SQL 실행 클래스 -->

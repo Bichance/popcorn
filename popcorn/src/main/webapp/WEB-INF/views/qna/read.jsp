@@ -20,7 +20,7 @@
 
 	function updateM() {
 		var url = "update";
-		url += "?bbsno=${dto.bbsno}";
+		url += "?qna_num=${dto.qna_num}";
 
 		url += "&col=${param.col}";
 		url += "&word=${param.word}";
@@ -31,7 +31,7 @@
 
 	function deleteM() {
 		var url = "delete";
-		url += "?bbsno=${dto.bbsno}";
+		url += "?qna_num=${dto.qna_num}";
 
 		url += "&col=${param.col}";
 		url += "&word=${param.word}";
@@ -42,7 +42,7 @@
 
 	function replyM() {
 		var url = "reply";
-		url += "?bbsno=${dto.bbsno}";
+		url += "?qna_num=${dto.qna_num}";
 
 		location.href = url;
 	}
@@ -61,22 +61,22 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">제목</div>
-			<div class="panel-body">${dto.title}</div>
+			<div class="panel-body">${dto.qna_title}</div>
 
 			<div class="panel-heading">내용</div>
-			<div class="panel-body">${dto.content}</div>
+			<div class="panel-body">${dto.qna_content}</div>
 
 			<div class="panel-heading">조회수</div>
-			<div class="panel-body">${dto.viewcnt}</div>
+			<div class="panel-body">${dto.qna_viewcnt}</div>
 
 			<div class="panel-heading">등록일</div>
-			<div class="panel-body">${dto.wdate}</div>
+			<div class="panel-body">${dto.qna_date}</div>
 
 		</div>
 
 		<div>
 			<button type="button" class="btn"
-				onclick="location.href='./create.do'">등록</button>
+				onclick="location.href='/create'">등록</button>
 			<button type="button" class="btn" onclick="updateM()">수정</button>
 			<button type="button" class="btn" onclick="deleteM()">삭제</button>
 			<button type="button" class="btn" onclick="replyM()">답변</button>
@@ -164,7 +164,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	  
-	  var bbsno = '<c:out value="${bbsno}"/>';
+	  var qna_num = '<c:out value="${qna_num}"/>';
 	  var sno = '<c:out value="${sno}"/>';
 	  var eno = '<c:out value="${eno}"/>';
 	  var replyUL = $(".chat");
@@ -172,7 +172,8 @@ $(document).ready(function () {
 	  showList();
 	  
 	function showList(){
-	    replyService.getList({bbsno:bbsno,sno:sno,eno:eno}, function(list) {
+		//??????replyService?????????
+	    replyService.getList({qna_num:qna_num,sno:sno,eno:eno}, function(list) {
 	            
 	     var str="";
 	     
@@ -181,10 +182,10 @@ $(document).ready(function () {
 	     }
 	     
 	     for (var i = 0, len = list.length || 0; i < len; i++) {
-	       str +="<li class='list-group-item' data-rnum='"+list[i].rnum+"'>";
+	       str +="<li class='list-group-item' data-rnum='"+list[i].qreply_num+"'>";
 	       str +="<div><div class='header'><strong class='primary-font'>"+list[i].id+"</strong>"; 
-	       str +="<small class='pull-right text-muted'>"+list[i].regdate+"</small></div>";
-	       str +=replaceAll(list[i].content,'\n','<br>')+"</div></li>";
+	       str +="<small class='pull-right text-muted'>"+list[i].qreply_date+"</small></div>";
+	       str +=replaceAll(list[i].qreply_content,'\n','<br>')+"</div></li>";
 	     }
 	 
 	     replyUL.html(str);
