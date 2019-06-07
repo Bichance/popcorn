@@ -5,47 +5,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="spring.mapper.popcorn.QreplyMapper">
 
-	<delete id="bdelete" parameterType="int">
-		delete from qreply
-		where qna_num = #{qna_num}
-	</delete>
-	
-	<select id="rcount" parameterType="int" resultType="int">
-		SELECT count(*) FROM qreply
-		WHERE qna_num = #{qna_num}
-	</select>
+	<!-- REPLY CREATE -->
 
 	<insert id="create" parameterType="QreplyDTO">
 		<selectKey keyProperty="qreply_num" resultType="int"
 			order="BEFORE">
 			select nvl(max(qreply_num),0)+1 from qreply
 		</selectKey>
-		insert into qreply(qreply_num, qreply_content, qreply_date, id, qna_num)
-		values(#{qreply_num}, #{qreply_content}, sysdate, #{id},#{qna_num}
+		insert into qreply(qreply_num, qreply_content, qreply_date, id,
+		qna_num)
+		values(#{qreply_num}, #{qreply_content}, sysdate,
+		#{id},#{qna_num}
 		)
 	</insert>
+
+	<!-- REPLY READ -->
+
 	<select id="read" parameterType="int" resultType="QreplyDTO">
-		select * from qreply
+		select * from
+		qreply
 		where qreply_num = #{qreply_num}
 	</select>
+
+	<!-- REPLY UPDATE -->
+
 	<update id="update" parameterType="QreplyDTO">
 		update qreply
-		set qreply_content = #{qreply_content}
+		set
+		qreply_content = #{qreply_content}
 		where qreply_num = #{qreply_num}
 	</update>
+
+	<!-- REPLY DELETE -->
+
 	<delete id="delete" parameterType="int">
 		delete from qreply
-		where qreply_num = #{qreply_num}
+		where
+		qreply_num = #{qreply_num}
 	</delete>
+
+	<!-- REPLY PARENT DELETE?? -->
+
+	<delete id="bdelete" parameterType="int">
+		delete from qreply
+		where
+		qna_num = #{qna_num}
+	</delete>
+
+	<!-- REPLY LIST -->
+
 	<select id="list" parameterType="Map" resultType="QreplyDTO">
-		select qreply_num, qreply_content, to_char(qreply_date,'yyyy-mm-dd') qreply_date, id,
+		select qreply_num, qreply_content, to_char(qreply_date,'yyyy-mm-dd')
+		qreply_date, id,
 		qna_num, r
 		FROM(
-		select qreply_num, qreply_content, qreply_date, id, qna_num, rownum r
+		select qreply_num, qreply_content,
+		qreply_date, id, qna_num, rownum r
 		FROM(
-		select qreply_num, qreply_content, qreply_date, id, qna_num
+		select qreply_num,
+		qreply_content, qreply_date, id, qna_num
 		from QREPLY
-		where qna_num = #{qna_num}
+		where qna_num =
+		#{qna_num}
 		order by qreply_num DESC
 		)
 		)
@@ -53,8 +74,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 WHERE r >= #{sno} and r <= #{eno}
 ]]>
 	</select>
-	<select id="total" parameterType="int" resultType="int">
-		select count(*) from qreply where qna_num=#{qna_num}
+
+	<!-- REPLY COUNT -->
+
+	<select id="rcount" parameterType="int" resultType="int">
+		SELECT
+		count(*) FROM qreply
+		WHERE qna_num = #{qna_num}
 	</select>
-	
+
+	<!-- REPLY TOTAL -->
+
+	<select id="total" parameterType="int" resultType="int">
+		select
+		count(*) from qreply where qna_num=#{qna_num}
+	</select>
+
 </mapper>

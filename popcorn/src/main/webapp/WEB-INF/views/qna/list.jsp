@@ -85,7 +85,7 @@
   								<c:if test="${dto.qna_indent>0}">
 									<img src='${root}/images/re.jpg'>
 								</c:if>
-								<c:set var="rcount"	value="${util:rcount(dto.qna_num,qrMapper) }" /> <!-- rinter -->
+								<c:set var="rcount"	value="${util:rcount(dto.qna_num, qrService) }" /> <!-- rinter -->
 									<a href="javascript:read('${dto.qna_num}')">${dto.qna_title}</a>
 								
 									<c:if test="${rcount>0 }">

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import spring.mapper.popcorn.QreplyMapper;
 import spring.model.qreply.QreplyDTO;
+import spring.model.qreply.QreplyService;
 //import spring.model.reply.ReplyDTO;
 //import spring.model.reply.ReplyInter;
 import spring.utility.popcorn.Utility;
@@ -28,8 +29,46 @@ import spring.utility.popcorn.Utility;
 public class QreplyController {
 
 	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired
 	private QreplyMapper qrMapper;
+	@Autowired
+	private QreplyService qrService;
+	
+	//REPLY CREATE
+	
+	@PostMapping("/qna/reply/create")
+	public ResponseEntity<String> create(@RequestBody QreplyDTO vo) {
+
+		log.info("QreplyDTO1: " + vo.getQreply_content());
+		log.info("QreplyDTO1: " + vo.getId());
+		log.info("QreplyDTO1: " + vo.getQna_num());
+
+		vo.setQreply_content(vo.getQreply_content().replaceAll("/n/r", "<br>"));
+
+		int flag = qrService.create(vo);
+
+		log.info("QReply INSERT flag: " + flag);
+
+		return flag == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//REPLY LIST
+	
+		@GetMapping("/qna/reply/list/{qna_num}/{sno}/{eno}")
+		public ResponseEntity<List<QreplyDTO>> getList(@PathVariable("qna_num") int qna_num, @PathVariable("sno") int sno,
+				@PathVariable("eno") int eno) {
+
+			Map map = new HashMap();
+			map.put("sno", sno);
+			map.put("eno", eno);
+			map.put("qna_num", qna_num);
+
+			return new ResponseEntity<List<QreplyDTO>>(qrMapper.list(map), HttpStatus.OK);
+		}
+
+	// REPLY UPATE(MODIFY)
 	
 	@PutMapping("/qna/reply/{qreply_num}")
 	public ResponseEntity<String> modify(
@@ -43,7 +82,10 @@ public class QreplyController {
 	: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	 
 	}
-	 
+	
+	
+	//REPLY DELETE(REMOVE)
+	
 	@DeleteMapping("/qna/reply/{qreply_num}")
 	public ResponseEntity<String> remove(@PathVariable("qreply_num") int qreply_num) {
 	 
@@ -63,8 +105,7 @@ public class QreplyController {
 	return new ResponseEntity<>(qrMapper.read(qreply_num), HttpStatus.OK);
 	}
 	
-	@GetMapping("/qna/reply/page")
-	public ResponseEntity<String> getPage(
+	@GetMapping("/qna/reply/page") public ResponseEntity<String> getPage(
 	@RequestParam("nPage") int nPage,
 	@RequestParam("nowPage") int nowPage,
 	@RequestParam("qna_num") int qna_num,
@@ -84,37 +125,6 @@ public class QreplyController {
 
 	return new ResponseEntity<>(paging, HttpStatus.OK);
 	 
-	}
-	 
-	 
-
-	@GetMapping("/qna/reply/list/{qna_num}/{sno}/{eno}")
-	public ResponseEntity<List<QreplyDTO>> getList(@PathVariable("qna_num") int qna_num, @PathVariable("sno") int sno,
-			@PathVariable("eno") int eno) {
-
-		Map map = new HashMap();
-		map.put("sno", sno);
-		map.put("eno", eno);
-		map.put("qna_num", qna_num);
-
-		return new ResponseEntity<List<QreplyDTO>>(qrMapper.list(map), HttpStatus.OK);
-	}
-
-	@PostMapping("/qna/reply/create")
-	public ResponseEntity<String> create(@RequestBody QreplyDTO vo) {
-
-		log.info("QreplyDTO1: " + vo.getQreply_content());
-		log.info("QreplyDTO1: " + vo.getId());
-		log.info("QreplyDTO1: " + vo.getQna_num());
-
-		vo.setQreply_content(vo.getQreply_content().replaceAll("/n/r", "<br>"));
-
-		int flag = qrMapper.create(vo);
-
-		log.info("QReply INSERT flag: " + flag);
-
-		return flag == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

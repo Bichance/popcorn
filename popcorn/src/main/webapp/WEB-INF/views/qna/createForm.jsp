@@ -18,7 +18,7 @@
 	<div class="container">
 		<h1 class="col-sm-offset-2 col-sm-10">질문하세요</h1>
 		<form class="form-horizontal" action="create" method="post">
-			<input type="hidden" name="id" value="${dto.id}">
+			<input type="hidden" name="id" value="user1">
 
 			<!-- 사실상 로그인한 다음에 작성자 이름을 쓸 필요는 없다. -->
 			<div class="form-group">

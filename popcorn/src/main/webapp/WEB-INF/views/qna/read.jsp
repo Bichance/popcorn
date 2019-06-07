@@ -76,7 +76,7 @@
 
 		<div>
 			<button type="button" class="btn"
-				onclick="location.href='/create'">등록</button>
+				onclick="location.href='create'">등록</button>
 			<button type="button" class="btn" onclick="updateM()">수정</button>
 			<button type="button" class="btn" onclick="deleteM()">삭제</button>
 			<button type="button" class="btn" onclick="replyM()">답변</button>

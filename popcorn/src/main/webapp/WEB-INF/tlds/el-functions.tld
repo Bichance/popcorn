@@ -39,7 +39,7 @@
             spring.utility.popcorn.Utility
         </function-class> 
         <function-signature>
-            int rcount(int, spring.mapper.popcorn.QreplyMapper ) 
+            int rcount(int, spring.model.qreply.QreplyService ) 
         </function-signature> 
     </function> 
 
