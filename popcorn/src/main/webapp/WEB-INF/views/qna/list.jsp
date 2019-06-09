@@ -96,6 +96,8 @@
 									</c:if>
 									</td>
 								<td>${dto.id}</td>
+								<td>${dto.qna_date}</td>
+								<td>${dto.qna_type}</td>
 								<td>${dto.qna_grpno}</td>
 								<td>${dto.qna_indent}</td>
 								<td>${dto.qna_ansnum}</td>

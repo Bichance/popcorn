@@ -18,7 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import spring.mapper.popcorn.QnaMapper;
+import spring.mapper.popcorn.QreplyMapper;
 import spring.model.qna.QnaDTO;
+import spring.model.qreply.QreplyDTO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,16 +32,30 @@ public class QnaInterTest {
 	
 	@Autowired
 	private QnaMapper qMapper;
+	@Autowired
+	private QreplyMapper qrMapper;
 	
 
+		
 	@Test
-	//@Ignore
+	public void testReplyList() {
+		Map map = new HashMap();
+		map.put("sno", 1);
+		map.put("eno", 3);
+		map.put("qna_num", 1);
+		
+		List<QreplyDTO> list = qrMapper.list(map);
+		System.out.println(list);
+
+	}
+	@Test
+	@Ignore
 	public void testMapper() {
 	logger.info("mapper:"+qMapper.getClass().getName());	 
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testCreate() {
 		QnaDTO dto = new QnaDTO();
 		

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/ssi/ssi_qna.jsp"%>
-
+${id}
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,7 +160,7 @@
       </div>
       <!-- /.modal -->
  
-<script type="text/javascript" src="${root }/js/breply.js"></script>
+<script type="text/javascript" src="${root}/js/breply.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	  
@@ -174,15 +174,15 @@ $(document).ready(function () {
 	function showList(){
 		//??????replyService?????????
 	    replyService.getList({qna_num:qna_num,sno:sno,eno:eno}, function(list) {
-	            
 	     var str="";
+	     //console.log(list);
 	     
 	     if(list == null || list.length == 0){
 	       return;
 	     }
 	     
 	     for (var i = 0, len = list.length || 0; i < len; i++) {
-	       str +="<li class='list-group-item' data-rnum='"+list[i].qreply_num+"'>";
+	       str +="<li class='list-group-item' data-qreply_num='"+list[i].qreply_num+"'>";
 	       str +="<div><div class='header'><strong class='primary-font'>"+list[i].id+"</strong>"; 
 	       str +="<small class='pull-right text-muted'>"+list[i].qreply_date+"</small></div>";
 	       str +=replaceAll(list[i].qreply_content,'\n','<br>')+"</div></li>";
@@ -209,12 +209,11 @@ $(document).ready(function () {
 	var replyPageFooter = $(".panel-footer");
 	var param = "nPage="+nPage;
 	param += "&nowPage="+nowPage;
-	param += "&bbsno="+bbsno;
+	param += "&qna_num="+qna_num;
 	param += "&col="+colx;
 	param += "&word="+wordx;
 	 
 	function showReplyPage(){
-	 
 	replyService.getPage(param, function(paging) {
 	 
 	  console.log(paging);
@@ -224,18 +223,31 @@ $(document).ready(function () {
 	  
 	});
 	}//end showReplyPage
+	
+	var modal = $(".modal");
+	var modalInputContent = modal.find("textarea[name='content']");
+	var modalInputId = modal.find("input[name='id']");
+	var modalInputRegDate = modal.find("input[name='qreply_date']");
+	  
+	var modalModBtn = $("#modalModBtn");
+	var modalRemoveBtn = $("#modalRemoveBtn");
+	var modalRegisterBtn = $("#modalRegisterBtn");
+	$("#modalCloseBtn").on("click", function(e){
+		 modal.modal('hide');
+	});
+	
 	//댓글 조회 클릭 이벤트 처리 
 	 $(".chat").on("click", "li", function(e){
 	   
-	   var rnum = $(this).data("rnum");
+	   var qreply_num = $(this).data("qreply_num");
 	   
-	   //alert(rnum)
-	   replyService.get(rnum, function(reply){
+	   //alert(qreply_num)
+	   replyService.get(qreply_num, function(reply){
 	   
 	     modalInputContent.val(reply.content);
 	     modalInputId.closest("div").hide();
 	     modalInputRegDate.closest("div").hide();
-	     modal.data("rnum", reply.rnum);
+	     modal.data("qreply_num", reply.qreply_num);
 	     
 	     modal.find("button[id !='modalCloseBtn']").hide();
 	     
@@ -247,23 +259,12 @@ $(document).ready(function () {
 	         
 	   });
 	 });
-	 var modal = $(".modal");
-	 var modalInputContent = modal.find("textarea[name='content']");
-	 var modalInputId = modal.find("input[name='id']");
-	 var modalInputRegDate = modal.find("input[name='regdate']");
-	  
-	 var modalModBtn = $("#modalModBtn");
-	 var modalRemoveBtn = $("#modalRemoveBtn");
-	 var modalRegisterBtn = $("#modalRegisterBtn");
-	 $("#modalCloseBtn").on("click", function(e){
-		 modal.modal('hide');
-		 });
 
 
 modalModBtn.on("click", function(e){
 	  
-    var reply = {rnum:modal.data("rnum"), content: modalInputContent.val()};
-    //alert(reply.rnum);
+    var reply = {qreply_num:modal.data("qreply_num"), content: modalInputContent.val()};
+    //alert(reply.qreply_num);
     replyService.update(reply, function(result){
           
       alert(result);
@@ -274,20 +275,20 @@ modalModBtn.on("click", function(e){
     
   });//modify 
  
- 
+ //REMOVE
   modalRemoveBtn.on("click", function (e){
     
-    var rnum = modal.data("rnum");
+    var qreply_num = modal.data("qreply_num");
     
-    replyService.remove(rnum, function(result){
+    replyService.remove(qreply_num, function(result){
           
         alert(result);
         modal.modal("hide");
         showList();
         
     });
-    
   });//remove
+  
   $("#addReplyBtn").on("click", function(e){
 	  
 	  if('${sessionScope.id}'==''){
@@ -297,8 +298,8 @@ modalModBtn.on("click", function(e){
 	        url += "&word=${word}";
 	        url += "&nowPage=${nowPage}";
 	        url += "&nPage=${nPage}";
-	        url += "&bbsno=${bbsno}";
-	        url += "&rurl=../bbs/read";
+	        url += "&qna_num=${qna_num}";
+	        url += "&rurl=../qna/read";
 	   location.href = url;
 	   
 	   }
@@ -313,11 +314,10 @@ modalModBtn.on("click", function(e){
 	  
 	  $(".modal").modal("show");
 	  
-	  
 	  }
 	});
-	 
-	 
+
+  //REGISTER BUTTON ON
 	modalRegisterBtn.on("click",function(e){
 	  
 	  if(modalInputContent.val()==''){
@@ -326,9 +326,9 @@ modalModBtn.on("click", function(e){
 	  }
 	 
 	  var reply = {
-	        content: modalInputContent.val(),
+			qreply_content: modalInputContent.val(),
 	        id:'<c:out value="${sessionScope.id}"/>',
-	        bbsno:'<c:out value="${bbsno}"/>'
+	        qna_num:'<c:out value="${qna_num}"/>'
 	      };
 	  //alert(reply.content);
 	  replyService.add(reply, function(result){
@@ -342,7 +342,6 @@ modalModBtn.on("click", function(e){
 	    showList();
 	    
 	  }); //end add
-	  
 	}); //end modalRegisterBtn.on
 	 
 });

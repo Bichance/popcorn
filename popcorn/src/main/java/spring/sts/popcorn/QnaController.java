@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import spring.mapper.popcorn.QnaMapper;
-import spring.mapper.popcorn.QreplyMapper;
 import spring.model.qna.QnaDTO;
 import spring.model.qna.QnaService;
 import spring.model.qreply.QreplyService;
@@ -56,9 +55,8 @@ public class QnaController {
 
 	@GetMapping("/qna/read")
 	public String read(int qna_num, Model model, int nowPage, String col, String word, HttpServletRequest request) {
-	
+		
 		QnaDTO dto = qService.read(qna_num);
-		qService.upViewcnt(qna_num);
 		
 		model.addAttribute("dto", dto);
 		
@@ -84,6 +82,10 @@ public class QnaController {
 		 
 		model.addAllAttributes(map);
 		 
+		
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("id", "user1");
 		/* 댓글 관련 끝 */  
 		return "/qna/read";
 	}

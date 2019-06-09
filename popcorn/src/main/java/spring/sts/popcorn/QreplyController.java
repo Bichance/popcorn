@@ -27,6 +27,8 @@ import spring.utility.popcorn.Utility;
 
 @RestController
 public class QreplyController {
+	
+	//이 컨트롤러는 Ajax의 요청을 처리하기 위한 컨트롤러이다.
 
 	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 	
@@ -35,8 +37,8 @@ public class QreplyController {
 	@Autowired
 	private QreplyService qrService;
 	
-	//REPLY CREATE
 	
+	//REPLY CREATE
 	@PostMapping("/qna/reply/create")
 	public ResponseEntity<String> create(@RequestBody QreplyDTO vo) {
 
@@ -54,22 +56,18 @@ public class QreplyController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	//REPLY LIST
+	//READ
+	@GetMapping("/qna/reply/{qreply_num}")
+	public ResponseEntity<QreplyDTO> get(@PathVariable("qreply_num") int qreply_num) {
+	 
+	log.info("get: " + qreply_num);
+	 
+	return new ResponseEntity<>(qrService.read(qreply_num), HttpStatus.OK);
+	}
+	//READ END
+
 	
-		@GetMapping("/qna/reply/list/{qna_num}/{sno}/{eno}")
-		public ResponseEntity<List<QreplyDTO>> getList(@PathVariable("qna_num") int qna_num, @PathVariable("sno") int sno,
-				@PathVariable("eno") int eno) {
-
-			Map map = new HashMap();
-			map.put("sno", sno);
-			map.put("eno", eno);
-			map.put("qna_num", qna_num);
-
-			return new ResponseEntity<List<QreplyDTO>>(qrMapper.list(map), HttpStatus.OK);
-		}
-
 	// REPLY UPATE(MODIFY)
-	
 	@PutMapping("/qna/reply/{qreply_num}")
 	public ResponseEntity<String> modify(
 	@RequestBody QreplyDTO vo, @PathVariable("qreply_num") int qreply_num) {
@@ -77,44 +75,47 @@ public class QreplyController {
 	log.info("qreply_num: " + qreply_num);
 	log.info("modify: " + vo);
 	 
-	return qrMapper.update(vo) == 1
+	return qrService.update(vo) == 1
 	? new ResponseEntity<>("success", HttpStatus.OK)
-	: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	 
+	: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
 	}
 	
 	
 	//REPLY DELETE(REMOVE)
-	
 	@DeleteMapping("/qna/reply/{qreply_num}")
 	public ResponseEntity<String> remove(@PathVariable("qreply_num") int qreply_num) {
 	 
 	log.info("remove: " + qreply_num);
 	 
-	return qrMapper.delete(qreply_num) == 1
+	return qrService.delete(qreply_num) == 1
 	? new ResponseEntity<>("success", HttpStatus.OK)
 	: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	 
-	}	
-	
-	@GetMapping("/qna/reply/{qreply_num}")
-	public ResponseEntity<QreplyDTO> get(@PathVariable("qreply_num") int qreply_num) {
-	 
-	log.info("get: " + qreply_num);
-	 
-	return new ResponseEntity<>(qrMapper.read(qreply_num), HttpStatus.OK);
 	}
 	
-	@GetMapping("/qna/reply/page") public ResponseEntity<String> getPage(
-	@RequestParam("nPage") int nPage,
-	@RequestParam("nowPage") int nowPage,
-	@RequestParam("qna_num") int qna_num,
-	@RequestParam("col") String col,
-	@RequestParam("word") String word
-	) {
+	//REPLY LIST
+	@GetMapping("/qna/reply/list/{qna_num}/{sno}/{eno}")
+	public ResponseEntity<List<QreplyDTO>> getList(@PathVariable("qna_num") int qna_num, @PathVariable("sno") int sno,
+			@PathVariable("eno") int eno) {
+
+		Map map = new HashMap();
+		map.put("sno", sno);
+		map.put("eno", eno);
+		map.put("qna_num", qna_num);
+		
+		return new ResponseEntity<List<QreplyDTO>>(qrMapper.list(map), HttpStatus.OK);
+	}
+	
+	//GET PAGE ( TOTAL?? )
+	@GetMapping("/qna/reply/page")
+	public ResponseEntity<String> getPage(
+		@RequestParam("nPage") int nPage,
+		@RequestParam("nowPage") int nowPage,
+		@RequestParam("qna_num") int qna_num,
+		@RequestParam("col") String col,
+		@RequestParam("word") String word) {
 	 
-	 
-	 int total = qrMapper.total(qna_num);
+	 int total = qrService.total(qna_num);
 	 String url = "read";
 	 
 	 int recordPerPage = 3; // 한페이지당 출력할 레코드 갯수

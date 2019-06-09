@@ -41,6 +41,9 @@ public interface QnaService {
 	//UP VIEW COUNT
 	void upViewcnt(int qna_num);
 	
+	//UP ANSWER NUMBER
+	void upAnsnum(Map map);
+	
 	//TOTAL
 	int total(Map map);
 	

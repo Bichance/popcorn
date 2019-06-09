@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="read" parameterType="int" resultType="QnaDTO">
 		select qna_num, qna_title, qna_content, to_char(qna_date,'yyyy-mm-dd')
-		qna_date, qna_type
+		qna_date, qna_type, qna_grpno, qna_indent, qna_ansnum, qna_refnum
 		from qna
 		where qna_num = #{qna_num}
 	</select>
@@ -136,7 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="upAnsnum" parameterType="Map">
 		update qna
-		set qna_ansnum = qna_ansnum +1
+		set qna_ansnum = qna_ansnum+1 
 		where qna_grpno = #{qna_grpno}
 		and qna_ansnum > #{qna_ansnum}
 	</update>

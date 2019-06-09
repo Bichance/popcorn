@@ -46,7 +46,7 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public QnaDTO read(int qna_num) {
 		QnaDTO dto = qMapper.read(qna_num);
-		//qMapper.upViewcnt(qna_num);
+		qMapper.upViewcnt(qna_num);
 		dto.setQna_content(dto.getQna_content().replaceAll("\r\n", "<br>"));
 		
 		//model.addAttribute("dto", dto);
@@ -108,6 +108,13 @@ public class QnaServiceImpl implements QnaService {
 		map.put("qna_ansnum", dto.getQna_ansnum());
 		
 		qMapper.upAnsnum(map);
+		System.out.println("===============================");
+		System.out.println("===============================");
+System.out.println(dto);
+		System.out.println("===============================");
+		System.out.println("===============================");
+		System.out.println("===============================");
+		
 		qMapper.createReply(dto);
 	
 	}
@@ -153,6 +160,17 @@ public class QnaServiceImpl implements QnaService {
 	public void upViewcnt(int qna_num) {
 		qMapper.upViewcnt(qna_num);
 	}
+
+	//UP ANSWER NUMBER
+	
+	@Override
+	public void upAnsnum(Map map) {
+		qMapper.upAnsnum(map);
+	}
+	
+
+	
+	
 
 
 	

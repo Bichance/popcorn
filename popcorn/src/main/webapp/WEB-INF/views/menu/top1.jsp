@@ -12,7 +12,8 @@
 .navbar {
   overflow: hidden;
   background-color: black;
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   top: 0;
   width: 100%;
 

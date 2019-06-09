@@ -8,22 +8,11 @@ public class QreplyDTO {
 	private int qna_num;
 	private String id;
 	
-	
 	@Override
 	public String toString() {
 		return "QreplyDTO [qreply_num=" + qreply_num + ", qreply_content=" + qreply_content + ", qreply_date="
 				+ qreply_date + ", qna_num=" + qna_num + ", id=" + id + "]";
 	}
-	
-	public QreplyDTO(int qreply_num, String qreply_content, String qreply_date, int qna_num, String id) {
-		super();
-		this.qreply_num = qreply_num;
-		this.qreply_content = qreply_content;
-		this.qreply_date = qreply_date;
-		this.qna_num = qna_num;
-		this.id = id;
-	}
-
 	public int getQreply_num() {
 		return qreply_num;
 	}
@@ -54,5 +43,7 @@ public class QreplyDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+
 
 }
