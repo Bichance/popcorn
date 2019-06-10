@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="spring.sts.popcorn">
+	<logger name="spring.sts.webtest">
 		<level value="info" />
 	</logger>
 	
@@ -31,6 +31,26 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<!-- SQL Logger -->
+    
+   <!--SQL를 보여준다. Prepared statement 관련 파라미터는 자동으로 보여준다. -->
+    <logger name="jdbc.sqlonly" > 
+ 
+        <level value="info"/> 
+ 
+        <appender-ref ref="console"/> 
+ 
+    </logger>
+ 
+    <!-- SQL의 조회결과를 테이블로 보여준다 -->
+    <logger name="jdbc.resultsettable" > 
+ 
+        <level value="info"/>  
+ 
+        <appender-ref ref="console"/> 
+ 
+    </logger> 
 
 	<!-- Root Logger -->
 	<root>
