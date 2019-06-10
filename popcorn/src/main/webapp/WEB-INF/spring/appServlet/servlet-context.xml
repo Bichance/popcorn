@@ -19,11 +19,13 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 	
 	<context:component-scan base-package="spring.sts.popcorn" />
-	<context:component-scan base-package="spring.model.*" />
+	<context:component-scan base-package="spring.model.notice" />
+	<context:component-scan base-package="spring.model.nreply" />
 	
-	
+	<!-- root-context.xml에서 처리해줄 것 : 어노테이션이 Controller인 것만 scan하겠다. -->
 	
 </beans:beans>
