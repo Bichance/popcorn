@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.popcorn.CartMapper">
+
+	<!-- CREATE -->
+
+	<insert id="create" parameterType="CartDTO">
+		
+		INSERT INTO cart(cart_num, movie_price, id, movie_num)
+        VALUES(#{cart_num}, #{movie_price}, #{id}, #{movie_num})
+		
+<!-- 		insert into qna(qna_num, -->
+<!-- 		qna_title, qna_content, qna_date, qna_type, qna_pw, qna_grpno, id) -->
+<!-- 		values((select nvl(Max(qna_num),0)+1 as qna_num from qna), -->
+<!-- 		#{qna_title}, #{qna_content}, sysdate, #{qna_type}, #{qna_pw}, (select -->
+<!-- 		nvl(Max(qna_grpno), 0)+1 as qna_grpno from qna), #{id}) -->
+	</insert>
+	
+	<!-- READ -->
+	
+	<select id="read" parameterType="int" resultType="CartDTO">
+		
+		SELECT cart_num, movie_price, id, movie_num 
+		FROM cart
+		WHERE cart_num = #{cart_num}
+		
+	</select>
+	
+	<!-- UPDATE -->
+	<!-- 영화는 수량이 없기 때문에 업데이트가 필요없다. 그냥 삭제하면 된다. -->
+	
+	<!-- DELETE -->
+	
+	<delete id="delete" parameterType="int">
+		DELETE from cart
+		WHERE movie_num = #{movie_num}
+	</delete>
+	
+	<!-- LIST -->
+	
+	<select id="list" parameterType="Map" resultType="CartDTO">
+		SELECT cart_num, movie_price, id, movie_num, r
+		from(
+			SELECT cart_num, movie_price, id, movie_num, rownum r
+			from(
+				select cart_num, movie_price, id, movie_num
+				from cart
+        		ORDER by movie_price asc
+        		)
+        	)
+	</select>
+	
+	
+</mapper>

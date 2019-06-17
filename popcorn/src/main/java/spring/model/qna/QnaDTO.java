@@ -1,6 +1,7 @@
 package spring.model.qna;
 
 public class QnaDTO {
+	
 	private int qna_num; // NUMBER NOT NULL,
 	private String qna_title; // VARCHAR(30) NULL,
 	private String qna_content; // VARCHAR(500) NULL,

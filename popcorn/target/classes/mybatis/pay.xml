@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="spring.mapper.popcorn.PayMapper">
+
+	<!-- CREATE -->
+
+	<insert id="create" parameterType="PayDTO">
+		
+		INSERT INTO pay(pay_num, id, pay_sum, pay_way, pay_date)
+        VALUES((select nvl(Max(pay_num),0)+1 as pay_num from pay), #{id}, #{pay_sum}, #{pay_way}, sysdate)
+		
+<!-- 		insert into qna(qna_num, -->
+<!-- 		qna_title, qna_content, qna_date, qna_type, qna_pw, qna_grpno, id) -->
+<!-- 		values((select nvl(Max(qna_num),0)+1 as qna_num from qna), -->
+<!-- 		#{qna_title}, #{qna_content}, sysdate, #{qna_type}, #{qna_pw}, (select -->
+<!-- 		nvl(Max(qna_grpno), 0)+1 as qna_grpno from qna), #{id}) -->
+	</insert>
+	
+	<!-- READ -->
+	<select id="read" parameterType="int" resultType="PayDTO">
+		
+		SELECT pay_num, id, pay_sum, pay_way, pay_date
+		FROM pay
+		WHERE pay_num = #{pay_num}
+		
+	</select>
+	
+	<!-- UPDATE -->
+	<update id="update" parameterType="PayDTO">
+		UPDATE pay set
+	    	pay_way= #{pay_way}
+		WHERE pay_num = #{pay_num}
+	</update>
+	
+	<!-- DELETE -->
+	<delete id="delete" parameterType="int">
+		DELETE from pay
+		WHERE pay_num = #{pay_num}
+	</delete>
+	
+	<!-- LIST -->
+	<select id="list" parameterType="Map" resultType="PayDTO">
+		SELECT pay_num, id, pay_sum, pay_way, pay_date, r
+		from(
+			SELECT pay_num, id, pay_sum, pay_way, pay_date, rownum r
+			from(
+				SELECT pay_num, id, pay_sum, pay_way, pay_date
+				from pay
+        		ORDER by pay_num asc
+        		)
+        	)
+	</select>
+	
+</mapper>
