@@ -53,7 +53,7 @@ public class PayInterTest {
 	//COMPLETE
 	//READ
 	@Test
-	@Ignore
+	//@Ignore
 	public void testRead() {
 		PayDTO dto = payMapper.read(1);
 		logger.info("dto: "+dto);

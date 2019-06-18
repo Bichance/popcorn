@@ -110,7 +110,7 @@ public class QnaServiceImpl implements QnaService {
 		qMapper.upAnsnum(map);
 		System.out.println("===============================");
 		System.out.println("===============================");
-System.out.println(dto);
+		System.out.println(dto);
 		System.out.println("===============================");
 		System.out.println("===============================");
 		System.out.println("===============================");

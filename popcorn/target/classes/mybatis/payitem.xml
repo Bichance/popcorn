@@ -22,19 +22,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- READ -->
+	
 	<select id="read" parameterType="int" resultType="PayItemDTO">
-		SELECT pay_item_num, pay_item_price, movie_num, pay_num
-		FROM pay_item
+<!-- 		SELECT pay_item_num, pay_item_price, movie_num, pay_num, r -->
+<!-- 		from( -->
+<!-- 			SELECT pay_item_num, pay_item_price, movie_num, pay_num, rownum r -->
+<!-- 			from( -->
+<!-- 				SELECT pay_item_num, pay_item_price, movie_num, pay_num -->
+<!-- 				from pay_item -->
+<!--         		ORDER by pay_item_num asc -->
+<!--         		) -->
+<!--         	) -->
+			SELECT pay_item_num, pay_item_price, movie_num, pay_num
+			FROM pay_item
+			WHERE pay_num = #{pay_num}
 		<!-- 아마 주문테이블이 먼저 생성되니까 반복문 돌려서 다 가져오려면 pay_num으로 가져오는게 맞다?? -->
-		WHERE pay_num = #{pay_num} 
+		
 	</select>
 	
 	<!-- UPDATE -->
 	<!-- 수정이 필요없다. 결제 안할거면 그냥 지워버리면 된다. -->
 	
+	
 	<!-- DELETE -->
 	<delete id="delete" parameterType="int">
-		
 		DELETE from pay_item
 <!-- 		영화를 삭제하려면 pay_item_num 또는 movie_num 으로 삭제하면된다. -->
 		WHERE pay_item_num = #{pay_item_num}

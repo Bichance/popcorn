@@ -9,7 +9,8 @@ public interface PayItemService {
 	boolean create(PayItemDTO dto);
 	
 	//READ  조회는 주문번호로 카트에 담은 모든 영화를 조회한다. 그러므로 pay_num
-	PayItemDTO read(int pay_num);
+	//근데 1개의 주문번호에 여러개의 영화(DTO)가 담길 수 있으니까 리스트로 받아줘야한다. 
+	List<PayItemDTO> read(int pay_num);
 	
 	//UPDATE 필요없다.
 	

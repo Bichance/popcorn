@@ -12,7 +12,7 @@ public interface PayService {
 	PayDTO read(int pay_num);
 	
 	//UPDATE
-	boolean update(int pay_num);
+	boolean update(PayDTO dto);
 	
 	//DELETE
 	void delete(int pay_num) throws Exception;
