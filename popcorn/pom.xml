@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.7</version>
 		</dependency>
 
 		<!-- spring-test : spring과 mybatis가 정상적으로 연동되는지 테스트 지원 -->
